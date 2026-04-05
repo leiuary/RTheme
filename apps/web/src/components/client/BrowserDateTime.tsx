@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 
+import { formatRelativeTime } from "@/lib/shared/relative-time";
+import { Tooltip } from "@/ui/Tooltip";
+
 type DateValue = Date | string | null | undefined;
 type BrowserDateTimePrecision = "date" | "minute" | "second";
 type BrowserDateTimeStyle = "default" | "dots";
@@ -80,21 +83,24 @@ export default function BrowserDateTime({
 }: BrowserDateTimeProps) {
   const date = normalizeDate(value);
   const [formattedText, setFormattedText] = useState<string | null>(null);
+  const [relativeText, setRelativeText] = useState("");
 
   useEffect(() => {
     if (!date) {
       setFormattedText(null);
+      setRelativeText("");
       return;
     }
 
     setFormattedText(formatDateTime(date, precision, locale, displayStyle));
+    setRelativeText(formatRelativeTime(date));
   }, [date, displayStyle, locale, precision]);
 
   if (!date) {
     return <span className={className}>{fallback}</span>;
   }
 
-  return (
+  const timeElement = (
     <time
       className={className}
       dateTime={date.toISOString()}
@@ -102,5 +108,11 @@ export default function BrowserDateTime({
     >
       {formattedText ?? fallback}
     </time>
+  );
+
+  return (
+    <Tooltip content={relativeText} delay={250} inline disabled={!relativeText}>
+      {timeElement}
+    </Tooltip>
   );
 }
