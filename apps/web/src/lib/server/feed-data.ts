@@ -335,15 +335,13 @@ export async function getFeedData(): Promise<FeedData> {
     posts.map(async (post) => {
       const postUrl = `${siteConfig.url}/posts/${post.slug}`;
       const isProtectedPost = post.accessMode !== "PUBLIC";
-      const featuredImage = isProtectedPost
-        ? null
-        : getFeaturedImageUrl(post.mediaRefs);
+      const featuredImage = getFeaturedImageUrl(post.mediaRefs);
 
       if (isProtectedPost) {
         return {
           title: post.title,
           slug: post.slug,
-          excerpt: null,
+          excerpt: post.excerpt,
           content: buildFeedLeadHtml(postUrl),
           publishedAt: post.publishedAt,
           updatedAt: post.updatedAt,
