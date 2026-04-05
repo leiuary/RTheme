@@ -72,6 +72,7 @@ export default async function RootLayout({
   cacheTag(
     "menus",
     "config/site.color",
+    "config/site.font.scalePercent",
     "config/site.title",
     "config/site.slogan.secondary",
     "config/site.avatar",
@@ -91,6 +92,7 @@ export default async function RootLayout({
     menus,
     [
       mainColor,
+      fontScalePercent,
       siteName,
       siteSloganSecondary,
       siteAvatar,
@@ -107,6 +109,7 @@ export default async function RootLayout({
     getActiveMenusForClient(),
     getConfigs([
       "site.color",
+      "site.font.scalePercent",
       "site.title",
       "site.slogan.secondary",
       "site.avatar",
@@ -129,6 +132,7 @@ export default async function RootLayout({
   // 打包配置
   const configs = {
     "site.color": mainColor,
+    "site.font.scalePercent": fontScalePercent,
     "site.title": siteName,
     "site.slogan.secondary": siteSloganSecondary,
     "site.avatar": siteAvatar,
@@ -162,7 +166,11 @@ export default async function RootLayout({
             <ConfigProvider configs={configs}>
               <NotificationProvider ablyEnabled={isAblyEnabled}>
                 <MenuProvider menus={menus}>
-                  <ResponsiveFontScale scaleFactor={0.017} baseSize={0}>
+                  <ResponsiveFontScale
+                    scaleFactor={0.017}
+                    baseSize={0}
+                    fontScalePercent={fontScalePercent}
+                  >
                     <LoadingAnimation mainColor={mainColor} />
                     <LayoutContainer>
                       <Suspense>
