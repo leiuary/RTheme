@@ -73,11 +73,11 @@ function normalizeFeedText(value: string): string {
   return value
     .replace(/<[^>]*>/g, " ")
     .replace(/&nbsp;/gi, " ")
-    .replace(/&amp;|&#38;/gi, "&")
     .replace(/&lt;|&#60;/gi, "<")
     .replace(/&gt;|&#62;/gi, ">")
     .replace(/&quot;|&#34;/gi, '"')
     .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&amp;|&#38;/gi, "&")
     .replace(/&[a-zA-Z0-9#]+;/g, " ")
     .replace(/\s+/g, " ")
     .trim();
